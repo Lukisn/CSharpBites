@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Bite01_Scrabble
 {
@@ -7,13 +8,14 @@ namespace Bite01_Scrabble
     {
         public static void Main(string[] args)
         {
+            string path = "../../dictionary.txt";
             var scrabble = new Scrabble();
             Console.WriteLine(scrabble);
             try
             {
-                scrabble.LoadWords();
+                scrabble.LoadWords(path);
             }
-            catch (NotImplementedException exception)
+            catch (Exception exception)
             {
                 Console.WriteLine($"Exception caught: {exception.Message}");
             }
@@ -30,7 +32,25 @@ namespace Bite01_Scrabble
         /// </summary>
         public List<string> LoadWords(string Path)
         {
-            throw new NotImplementedException();
+            string line;
+            var wordList = new List<string>();
+            if (File.Exists(Path))
+            {
+                using (StreamReader reader = File.OpenText(Path))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        Console.WriteLine(line);
+                        wordList.Add(line);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"File {Path} does not exist!");
+                Console.WriteLine($"Current Directory is: {Directory.GetCurrentDirectory()}");
+            }
+            return wordList;
         }
 
         /// <summary>
