@@ -6,25 +6,26 @@ namespace Bite01_Scrabble
 {
     class Program
     {
-        public static void Main(string[] args)
+        /// <summary>
+        /// The main entry point of the program.
+        /// </summary>
+        public static void Main()
         {
-            string path = "../../dictionary.txt";
+            // executing in bin/debug/ or bin/release/, so 2 dirs up is the dictionary
+            string path = "../../dictionary.txt";  // hardcoded for simplicity
             var scrabble = new Scrabble();
             Console.WriteLine(scrabble);
-            try
-            {
-                scrabble.LoadWords(path);
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine($"Exception caught: {exception.Message}");
-            }
 
-            Console.WriteLine("Hello World!");
-            Console.ReadKey();
+            var wordList = scrabble.LoadWords(path);
+            Console.WriteLine($"List length = {wordList.Count} words");
+
+            Console.ReadKey();  // Wait for user input to end the program
         }
     }
 
+    /// <summary>
+    /// Main logic class for implementing the challenge code.
+    /// </summary>
     class Scrabble
     {
         /// <summary>
@@ -40,7 +41,7 @@ namespace Bite01_Scrabble
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
-                        Console.WriteLine(line);
+                        // Console.WriteLine(line);
                         wordList.Add(line);
                     }
                 }
